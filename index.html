@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a1a1a">
+<meta name="description" content="Eduqas Level 1/2 Engineering Unit 3 Revision Hub — all past papers">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Eng Revision">
+<title>Eduqas Engineering Unit 3 — Revision Hub</title>
+<link rel="manifest" id="manifest-placeholder">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --bg2: #1a1a1a;
+    --bg3: #242424;
+    --border: #2e2e2e;
+    --border2: #383838;
+    --text: #e8e8e8;
+    --text2: #a0a0a0;
+    --text3: #666;
+    --amber: #e8a020;
+    --amber-bg: #2a1e00;
+    --blue: #4da6ff;
+    --blue-bg: #001a33;
+    --teal: #3dd68c;
+    --teal-bg: #00231a;
+    --coral: #ff7f5e;
+    --coral-bg: #2a0e00;
+    --purple: #b39dff;
+    --purple-bg: #160d33;
+    --green: #3dd68c;
+    --red: #ff6b6b;
+    --radius: 8px;
+    --radius-sm: 5px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+  #app { max-width: 900px; margin: 0 auto; padding: 1rem; width: 100%; }
+  header { padding: 1rem 0 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
+  header h1 { font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+  header p { font-size: 13px; color: var(--text2); }
+  .badge-updated { color: var(--teal); font-size: 12px; font-weight: 500; margin-left: 8px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .tab { padding: 6px 14px; font-size: 13px; border: 1px solid var(--border2); border-radius: 20px; cursor: pointer; background: transparent; color: var(--text2); transition: .15s; white-space: nowrap; flex: 1 1 auto; text-align: center; }
+  .tab.active { background: var(--bg3); color: var(--text); border-color: #555; font-weight: 500; }
+  .tab:hover:not(.active) { background: var(--bg2); color: var(--text); }
+  .section { display: none; }
+  .section.show { display: block; }
+
+  /* cards */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: .75rem; overflow-x: auto; }
+  .card-title { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+
+  /* badges */
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+  .b-amber { background: var(--amber-bg); color: var(--amber); }
+  .b-blue { background: var(--blue-bg); color: var(--blue); }
+  .b-teal { background: var(--teal-bg); color: var(--teal); }
+  .b-coral { background: var(--coral-bg); color: var(--coral); }
+  .b-purple { background: var(--purple-bg); color: var(--purple); }
+  .b-gray { background: #222; color: #aaa; }
+
+  /* stat row */
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 1.25rem; }
+  .stat-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem; text-align: center; }
+  .stat-n { font-size: 22px; font-weight: 600; color: var(--amber); }
+  .stat-l { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  /* section headings */
+  .sh { font-size: 14px; font-weight: 600; margin: 1.5rem 0 .75rem; padding-bottom: 5px; border-bottom: 1px solid var(--border); color: var(--text); }
+
+  /* alert banners */
+  .alert { font-size: 13px; color: var(--text2); background: var(--bg2); padding: 10px 14px; border-radius: var(--radius); margin-bottom: 1rem; line-height: 1.6; }
+  .alert-amber { border-left: 3px solid var(--amber); }
+  .alert-teal { border-left: 3px solid var(--teal); }
+  .alert-coral { border-left: 3px solid var(--coral); }
+
+  /* tables */
+  .table-wrapper { overflow-x: auto; width: 100%; }
+  table.ref { width: 100%; font-size: 13px; border-collapse: collapse; margin: 8px 0; min-width: 500px; }
+  table.ref th { font-size: 11px; font-weight: 600; text-align: left; color: var(--text2); padding: 7px 8px; border-bottom: 1px solid var(--border2); background: var(--bg2); }
+  table.ref td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55; font-size: 13px; background: var(--bg); }
+  table.ref tr:last-child td { border-bottom: none; }
+  table.ref td:first-child { color: var(--amber); font-weight: 500; }
+
+  /* formula box */
+  .fbox { background: var(--bg2); border-left: 3px solid var(--amber); padding: 9px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 6px 0; font-size: 14px; font-weight: 500; color: var(--text); word-break: break-word; }
+
+  /* question bank */
+  .q-topic-head { font-size: 14px; font-weight: 600; margin: 1.5rem 0 .6rem; padding: 8px 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); display: flex; align-items: center; gap: 8px; }
+  .qrow { border-bottom: 1px solid var(--border); padding: 10px 4px; }
+  .qrow:last-child { border-bottom: none; }
+  .qtext { font-size: 14px; margin-bottom: 4px; line-height: 1.5; color: var(--text); }
+  .qmeta { font-size: 12px; color: var(--text3); margin-bottom: 5px; }
+  .qmeta .src { color: var(--amber); margin-left: 6px; }
+  .qans { font-size: 13px; color: var(--text2); background: var(--bg2); border-radius: var(--radius-sm); padding: 8px 12px; display: none; margin-top: 6px; line-height: 1.7; white-space: pre-line; }
+  .qans.open { display: block; }
+  .toggle-btn { font-size: 12px; padding: 3px 10px; border: 1px solid var(--border2); border-radius: 4px; cursor: pointer; background: transparent; color: var(--text2); }
+  .toggle-btn:hover { background: var(--bg3); color: var(--text); }
+
+  /* pills */
+  .pill-grid { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+  .pill { padding: 4px 10px; border: 1px solid var(--border2); border-radius: 20px; font-size: 12px; color: var(--text2); }
+
+  /* comparison table */
+  .cmp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 1.25rem; }
+  .cmp-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .75rem; font-size: 12px; }
+  .cmp-head { font-size: 11px; font-weight: 600; color: var(--amber); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+  .cmp-item { padding: 3px 0; color: var(--text2); line-height: 1.4; border-bottom: 1px solid var(--border); }
+  .cmp-item:last-child { border-bottom: none; }
+
+  /* quiz */
+  .progress { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; margin-bottom: 1.25rem; }
+  .progress-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width .3s; }
+  .quiz-q { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .quiz-q h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; line-height: 1.5; color: var(--text); }
+  .quiz-q .qnum { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
+  .opts { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .opt { padding: 9px 14px; border: 1px solid var(--border2); border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; text-align: left; background: transparent; color: var(--text); transition: .12s; }
+  .opt:hover { background: var(--bg3); border-color: #555; }
+  .opt.correct { border-color: var(--teal); background: var(--teal-bg); color: var(--teal); }
+  .opt.wrong { border-color: var(--coral); background: var(--coral-bg); color: var(--coral); }
+  .opt.disabled { pointer-events: none; }
+  .explain { font-size: 13px; padding: 9px 12px; margin-top: 10px; border-radius: var(--radius-sm); background: var(--bg3); color: var(--text2); display: none; line-height: 1.7; border-left: 3px solid var(--amber); }
+  .explain.show { display: block; }
+  .next-btn { width: 100%; padding: 10px; border: 1px solid var(--border2); border-radius: var(--radius-sm); cursor: pointer; background: transparent; font-size: 14px; margin-top: 10px; color: var(--text); display: none; }
+  .next-btn.show { display: block; }
+  .next-btn:hover { background: var(--bg3); }
+  .restart-btn { padding: 8px 20px; border: 1px solid var(--teal); border-radius: var(--radius-sm); cursor: pointer; background: var(--teal-bg); font-size: 14px; color: var(--teal); margin-top: 12px; }
+
+  /* filter buttons for question bank */
+  .filter-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .fbtn { padding: 4px 12px; font-size: 12px; border: 1px solid var(--border2); border-radius: 20px; cursor: pointer; background: transparent; color: var(--text2); }
+  .fbtn.active { background: var(--amber-bg); color: var(--amber); border-color: var(--amber); }
+  .fbtn:hover:not(.active) { background: var(--bg2); }
+
+  /* install banner */
+  #install-banner { display: none; position: fixed; bottom: 1rem; right: 1rem; background: var(--bg2); border: 1px solid var(--amber); border-radius: var(--radius); padding: .75rem 1rem; font-size: 13px; color: var(--text); max-width: 280px; z-index: 999; }
+  #install-banner button { margin-top: 8px; padding: 5px 12px; background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber); border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 6px; }
+  #install-banner h4 { color: var(--amber); margin-bottom: 4px; font-size: 13px; }
+
+  @media (max-width: 600px) {
+    #app { padding: .75rem; }
+    header h1 { font-size: 16px; }
+    .tabs { gap: 4px; }
+    .tab { padding: 5px 10px; font-size: 12px; }
+    table.ref { font-size: 12px; }
+    .stat-row, .grid2, .cmp-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Eduqas Engineering Unit 3 <span class="badge-updated">✓ All 4 papers</span></h1>
+    <p>Solving Engineering Problems · SAMs + W24 + S24 + W25 · 80 marks · 1h 30min</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('overview', this)">Paper structure</button>
+    <button class="tab" onclick="showTab('questions', this)">Question bank</button>
+    <button class="tab" onclick="showTab('ref', this)">Quick reference</button>
+    <button class="tab" onclick="showTab('quiz', this)">Quiz mode</button>
+  </div>
+
+  <div id="overview" class="section show">
+    <div class="alert alert-teal">Built from: SAMs (practice paper) · W24 (Jan 2024) · S24 (May 2024) · W25 (Jan 2025). Fully updated with official W24, S24, and W25 mark schemes. [cite: 3, 20]</div>
+
+    <div class="alert alert-coral"><strong>⚠ W25 broke the pattern.</strong> Q1 was a roller coaster (not a bicycle). Q2 was a pillar drill + orthographic drawing (not a school project). Q3 was bicycle design with gear ratio, tolerance and instrument reading calculations. The exam is evolving — know everything, not just the old pattern.</div>
+
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-n">4</div><div class="stat-l">Questions</div></div>
+      <div class="stat-box"><div class="stat-n">80</div><div class="stat-l">Total marks</div></div>
+      <div class="stat-box"><div class="stat-n">90</div><div class="stat-l">Minutes</div></div>
+      <div class="stat-box"><div class="stat-n">50%</div><div class="stat-l">AO1 recall</div></div>
+      <div class="stat-box"><div class="stat-n">37.5%</div><div class="stat-l">AO2 apply</div></div>
+      <div class="stat-box"><div class="stat-n">12.5%</div><div class="stat-l">AO3 analyse</div></div>
+    </div>
+
+    <div class="sh">All 4 papers — question by question</div>
+    <div class="cmp-grid">
+      <div class="cmp-card"><div class="cmp-head">SAMs (practice)</div>
+        <div class="cmp-item">Q1: Recumbent bicycle</div>
+        <div class="cmp-item">Q2: Dustpan (riveting sketch)</div>
+        <div class="cmp-item">Q3: Pillar drill + funfair circuit</div>
+        <div class="cmp-item">Q4: Smart speakers</div>
+      </div>
+      <div class="cmp-card"><div class="cmp-head">W24 — Jan 2024</div>
+        <div class="cmp-item">Q1: Electric bicycle</div>
+        <div class="cmp-item">Q2: Toolmakers' clamp (tapping)</div>
+        <div class="cmp-item">Q3: Centre lathe + candy floss machine</div>
+        <div class="cmp-item">Q4: Electric cars</div>
+      </div>
+      <div class="cmp-card"><div class="cmp-head">S24 — May 2024</div>
+        <div class="cmp-item">Q1: Tall bicycle</div>
+        <div class="cmp-item">Q2: Dice paperweight (chamfer)</div>
+        <div class="cmp-item">Q3: Milling machine + roller coasters</div>
+        <div class="cmp-item">Q4: VR devices</div>
+      </div>
+      <div class="cmp-card"><div class="cmp-head">W25 — Jan 2025 ⚠</div>
+        <div class="cmp-item">Q1: Roller coaster (NOT bicycle!)</div>
+        <div class="cmp-item">Q2: Pillar drill + bracket drawing</div>
+        <div class="cmp-item">Q3: Bicycle design + calculations</div>
+        <div class="cmp-item">Q4: Renewable energy</div>
+      </div>
+    </div>
+
+    <div class="sh">What's always in the exam — confirmed across all papers</div>
+    <div class="pill-grid">
+      <div class="pill">Material properties (name + reason)</div>
+      <div class="pill">Surface finish reasons</div>
+      <div class="pill">Permanent vs temp joining</div>
+      <div class="pill">Tool identification [6 marks]</div>
+      <div class="pill">Sketch + annotate a process [6]</div>
+      <div class="pill">Safety precautions [3]</div>
+      <div class="pill">Workshop machine: name + process</div>
+      <div class="pill">Risks + control measures [6]</div>
+      <div class="pill">Engineering calculation</div>
+      <div class="pill">Environmental/disposal question</div>
+      <div class="pill">Q4: Adv + disadv discussion [10]</div>
+      <div class="pill">Gear ratio calculations</div>
+      <div class="pill">Tolerance max/min</div>
+      <div class="pill">Reading instruments</div>
+      <div class="pill">Drawing symbols + title block</div>
+      <div class="pill">CAD advantages</div>
+      <div class="pill">Screwdriver drive types</div>
+      <div class="pill">Internal + Odd-leg callipers</div>
+      <div class="pill">NDT explanation</div>
+    </div>
+
+    <div class="sh">Q4 topics — all confirmed</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Topics that have appeared</div>
+        <ul style="list-style:none;font-size:13px;color:var(--text2);line-height:2">
+          <li>→ Smart speakers (SAMs)</li>
+          <li>→ Electric cars (W24)</li>
+          <li>→ VR devices in manufacturing (S24)</li>
+          <li>→ Renewable energy (W25)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Likely future topics</div>
+        <ul style="list-style:none;font-size:13px;color:var(--text2);line-height:2">
+          <li>→ 3D printing / additive manufacturing</li>
+          <li>→ Drones / autonomous vehicles</li>
+          <li>→ AI / robots in manufacturing</li>
+          <li>→ Smart home technology</li>
+          <li>→ Electric vehicles / batteries</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert alert-amber">For Q4: always write paragraphs not bullet lists. The S24/W25 mark schemes explicitly award up to 2 bonus marks for well written, extended prose[cite: 97, 108]. Always cover BOTH advantages AND disadvantages with specific engineering examples.</div>
+  </div>
+
+  <div id="questions" class="section">
+    <div class="filter-row" id="filter-row"></div>
+    <div id="qbank"></div>
+  </div>
+
+  <div id="ref" class="section">
+
+    <div class="sh">Formulas — must know</div>
+    <div class="fbox">Ohm's Law: V = I × R &nbsp;|&nbsp; R = V ÷ I &nbsp;|&nbsp; I = V ÷ R</div>
+    <div class="fbox">Gear ratio = teeth on driven gear ÷ teeth on drive gear</div>
+    <div class="fbox">Tolerance: MAX = nominal + upper tolerance &nbsp;|&nbsp; MIN = nominal − lower tolerance</div>
+    <div class="fbox">Area (rectangle) = length × width &nbsp;|&nbsp; Area (circle) = π r²</div>
+    <div class="fbox">Volume = area × thickness/depth</div>
+    <div class="fbox">Stock ordering: pieces per length = stock ÷ piece size (round DOWN) → lengths needed = pupils ÷ pieces per length (round UP)</div>
+
+    <div class="sh">Tolerance worked examples (W25)</div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--text2);line-height:2.1">
+        <strong style="color:var(--text)">25.0mm ± 0.5mm</strong> → MAX = 25.5mm &nbsp;|&nbsp; MIN = 24.5mm [cite: 88]<br>
+        <strong style="color:var(--text)">36.40mm ± 0.35mm</strong> → MAX = 36.75mm &nbsp;|&nbsp; MIN = 36.05mm [cite: 88]<br>
+        <strong style="color:var(--text)">7.8mm +0.4 / −0.0</strong> → MAX = 8.2mm &nbsp;|&nbsp; MIN = 7.8mm (unilateral tolerance) [cite: 88]
+      </div>
+    </div>
+
+    <div class="sh">Gear ratio worked examples (W25)</div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--text2);line-height:2.2">
+        Drive gear = 30 teeth<br>
+        <strong style="color:var(--text)">Driven = 10 teeth:</strong> ratio = $10/30=1:3$ [cite: 67]<br>
+        <strong style="color:var(--text)">Driven = 15 teeth:</strong> fraction = $15/30 = \frac{1}{2}$ (must be in simplest form) [cite: 67]<br>
+        <strong style="color:var(--text)">Driven = 6 teeth:</strong> decimal = $6/30=0.2$ [cite: 67]
+      </div>
+    </div>
+
+    <div class="sh">Material classifications</div>
+    <div class="table-wrapper">
+      <table class="ref">
+        <tr><th>Type</th><th>Examples</th><th>Key properties / notes</th></tr>
+        <tr><td>Ferrous metals</td><td>Mild steel, stainless steel, tool steel, cast iron</td><td>Contain iron · magnetic · can corrode (except stainless)</td></tr>
+        <tr><td>Non-ferrous metals</td><td>Aluminium, copper, brass, titanium</td><td>Non-magnetic · corrosion resistant · good conductors</td></tr>
+        <tr><td>Alloy</td><td>Steel (iron+carbon), aluminium alloy</td><td>Mixture of 2+ metals — improved properties over pure metals</td></tr>
+        <tr><td>Thermoplastics</td><td>Acrylic, nylon, HIPS, ABS, PVC</td><td>Soften when heated → can be reformed · recyclable</td></tr>
+        <tr><td>Thermosetting</td><td>Urea formaldehyde, epoxy resin, silicone, Bakelite</td><td>Set permanently when cured — cannot be re-melted</td></tr>
+        <tr><td>Composite</td><td>Carbon fibre (CFRP), Kevlar, GRP/fibreglass</td><td>High strength-to-weight · cannot be recycled · expensive · difficult to repair</td></tr>
+        <tr><td>Smart materials</td><td>Thermochromic ink, nitinol (shape memory alloy)</td><td>Change properties in response to a stimulus (heat, stress)</td></tr>
+      </table>
+    </div>
+
+    <div class="sh">Physical properties — definitions</div>
+    <div class="table-wrapper">
+      <table class="ref">
+        <tr><th>Property</th><th>Definition</th></tr>
+        <tr><td>Tensile strength</td><td>Resists being stretched / pulled apart without breaking</td></tr>
+        <tr><td>Compressive strength</td><td>Resists being crushed / compressed without deforming</td></tr>
+        <tr><td>Hardness</td><td>Resists surface scratching or deformation when impacted</td></tr>
+        <tr><td>Toughness</td><td>Absorbs impact / shock energy without fracturing</td></tr>
+        <tr><td>Malleability</td><td>Can be hammered / pressed into thin sheets without cracking</td></tr>
+        <tr><td>Ductility</td><td>Can be drawn into wire without fracturing</td></tr>
+        <tr><td>Elasticity</td><td>Returns to original shape after the deforming force is removed</td></tr>
+        <tr><td>Conductivity</td><td>Allows electricity or heat to pass through efficiently</td></tr>
+        <tr><td>Corrosion resistance</td><td>Resists damage from oxidation / chemical reactions (e.g. rust)</td></tr>
+      </table>
+    </div>
+
+    <div class="sh">Tools confirmed in real papers — Q2 tool identification [always 6 marks]</div>
+    <div class="alert alert-amber">Mark scheme warnings: "bench vice" NOT just "vice" · "hand file" or "flat file" NOT just "file" · "digital calliper" and "vernier calliper" are DIFFERENT tools — don't mix up · Do NOT accept "Cross Head" for a Phillips screwdriver[cite: 30].</div>
+    <div class="table-wrapper">
+      <table class="ref">
+        <tr><th>Tool</th><th>Correct mark scheme name</th><th>Use</th><th>Paper</th></tr>
+        <tr><td>Scriber</td><td>Scriber</td><td>Mark/scratch lines onto metal surface during marking out</td><td>SAMs</td></tr>
+        <tr><td>Centre punch</td><td>Centre punch</td><td>Create dimple to locate drill bit accurately, prevent wandering</td><td>SAMs</td></tr>
+        <tr><td>Engineer's square</td><td>Engineer's square</td><td>Mark lines at 90° from a straight edge</td><td>SAMs</td></tr>
+        <tr><td>Bench vice</td><td>Bench vice (NOT "vice")</td><td>Securely hold workpiece for filing, hacksawing, marking</td><td>S24</td></tr>
+        <tr><td>Hand file / flat file</td><td>Hand file / flat file (NOT "file")</td><td>Remove small amounts of material by hand; shape and deburr</td><td>S24</td></tr>
+        <tr><td>Digital calliper</td><td>Digital calliper (NOT "vernier")</td><td>Measure internal, external, depth dimensions electronically</td><td>S24</td></tr>
+        <tr><td>Vernier calliper</td><td>Vernier calliper</td><td>Measure internal, external, depth and step dimensions using a vernier scale</td><td>W24, W25</td></tr>
+        <tr><td>Tailstock</td><td>Tailstock</td><td>Supports end of long material on lathe; holds Jacobs chuck for drilling</td><td>W24</td></tr>
+        <tr><td>Jacobs chuck</td><td>Jacobs chuck</td><td>Holds drill bit on pillar drill or centre lathe</td><td>W24</td></tr>
+        <tr><td>Odd-leg calliper</td><td>Odd-leg calliper / jenny calliper</td><td>Scribe/mark-out a parallel line from an edge at a specific distance [cite: 33]</td><td>W25</td></tr>
+        <tr><td>Internal calliper</td><td>Internal calliper</td><td>Used to gauge/compare/check (not measure) internal dimensions [cite: 33]</td><td>W25</td></tr>
+      </table>
+    </div>
+
+    <div class="sh">Machines — confirmed across all papers (Q3 or Q2)</div>
+    <div class="table-wrapper">
+      <table class="ref">
+        <tr><th>Machine</th><th>Primary use</th><th>Tools / bits used</th><th>Paper</th></tr>
+        <tr><td>Pillar drill</td><td>Drill accurate holes in materials</td><td>Twist drill, countersink, counterbore bits</td><td>SAMs, W25</td></tr>
+        <tr><td>Centre lathe</td><td>Turn/reduce cylindrical components to size</td><td>R/H knife, facing, parting, knurling, chamfer, boring bar, roughing tool</td><td>W24</td></tr>
+        <tr><td>Milling machine</td><td>Remove material from flat surfaces; produce slots, recesses, counterbores</td><td>Face mill, slot drill, end mill, shoulder cutter</td><td>S24</td></tr>
+      </table>
+    </div>
+
+    <div class="sh">Screwdriver drive types (W25)</div>
+    <div class="table-wrapper">
+      <table class="ref">
+        <tr><th>Drive type</th><th>Appearance</th><th>Notes</th></tr>
+        <tr><td>Slotted / flat head</td><td>Single straight slot [cite: 30]</td><td>Oldest type; easy to slip out; less torque than cross-head</td></tr>
+        <tr><td>Phillips / Pozi drive</td><td>Plus (+) cross shape</td><td>DO NOT ACCEPT "Cross Head" in the exam[cite: 30].</td></tr>
+      </table>
+    </div>
+
+    <div class="sh">Engineering drawing conventions (W25)</div>
+    <div class="table-wrapper">
+      <table class="ref">
+        <tr><th>Symbol / convention</th><th>Name</th><th>Use</th></tr>
+        <tr><td>Ø symbol</td><td>Diameter</td><td>Used to show the dimension value is a diameter (width not length) [cite: 55, 56]</td></tr>
+        <tr><td>Target symbol (circle with cross)</td><td>Datum</td><td>Used for a point of origin or reference for measurements [cite: 57, 58]</td></tr>
+        <tr><td>Chain-dot line (dash-dot)</td><td>Centre line</td><td>Marks the central axis of holes, cylinders, and symmetrical features [cite: 48]</td></tr>
+        <tr><td>Dashed line</td><td>Hidden detail line</td><td>Shows edges/features hidden from the viewer's current direction [cite: 47]</td></tr>
+      </table>
+    </div>
+
+    <div class="sh">Title block — information included (W25)</div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--text2);line-height:2">
+        Information may include: <strong style="color:var(--text)">Projection angle symbol · Scale of drawing · Drawing Number · Drawing title / product or part name · Author of Drawing · Date created or checked or modified · Department drawing was created in · Material selection · Finishes that could be applied · What units the dimensions are in</strong>[cite: 64].
+      </div>
+    </div>
+
+    <div class="sh">PPE — Personal Protective Equipment (W25)</div>
+    <div class="fbox">P = Personal &nbsp;&nbsp; P = Protective &nbsp;&nbsp; E = Equipment</div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--text2);line-height:2">
+        Items for a pillar drill: <strong style="color:var(--text)">Eye protection (Goggles / Safety glasses / face mask) · Work wear (Apron / overalls / lab coat) · Safety footwear (Safety boots / Steels)</strong>[cite: 30].<br>
+        <span style="color:var(--coral)">Note: Do NOT accept gloves</span>[cite: 30].
+      </div>
+    </div>
+
+    <div class="sh">Advantages of CAD (W25)</div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--text2);line-height:2">
+        <strong style="color:var(--text)">Can produce accurate models · Can be quicker to produce CAD models · Easier to amend, modify and change models · Can share models with others digitally · Several people can work on model at the same time from different locations · Offers 'Virtual tours' of the design · Non-destructive testing can be simulated · Digital CAD model files take up no physical space unlike physical models · Quick to duplicate designs · 3D models can easily be projected into 2D orthographic models for engineers to read</strong>[cite: 24].
+      </div>
+    </div>
+
+    <div class="sh">Q4 — Renewable energy (W25) — key content</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Wind, Solar & Geothermal</div>
+        <div style="font-size:13px;color:var(--text2);line-height:2">
+          <strong style="color:var(--text)">Wind:</strong> Low cost electricity, low operational cost, creates jobs. Disadv: Blades are non-recyclable, noisy, danger to wildlife[cite: 100].<br>
+          <strong style="color:var(--text)">Solar:</strong> Clean energy with minimal impact, good for economy. Disadv: Expensive to set-up, needs large space, weather dependent / doesn't work at night[cite: 100, 102].<br>
+          <strong style="color:var(--text)">Geothermal:</strong> Clean energy, no need to burn fuels. Disadv: Location specific, expensive to set-up, needs long connection distance to grids[cite: 102].
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Biomass & Hydropower</div>
+        <div style="font-size:13px;color:var(--text2);line-height:2">
+          <strong style="color:var(--text)">Biomass:</strong> Versatile source, cheaper/cleaner than fossil fuels, good way to get rid of waste. Disadv: Generates CO2 when burned, lots of space needed for crops, can contribute to deforestation[cite: 103, 104].<br>
+          <strong style="color:var(--text)">Hydropower:</strong> Reliable, highly efficient, reservoirs build leisure industry. Disadv: Dams can displace communities/drown land, uses huge amounts of concrete (bad for environment), very expensive to build[cite: 104, 105, 106].
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz" class="section">
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-n" id="qs">0</div><div class="stat-l">Correct</div></div>
+      <div class="stat-box"><div class="stat-n" id="qt">0</div><div class="stat-l">Attempted</div></div>
+      <div class="stat-box"><div class="stat-n" id="qp">—</div><div class="stat-l">Accuracy</div></div>
+      <div class="stat-box"><div class="stat-n" id="qr-stat">—</div><div class="stat-l">Remaining</div></div>
+    </div>
+    <div class="progress"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div id="quiz-area"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next question →</button>
+  </div>
+</div>
+
+<div id="install-banner">
+  <h4>📲 Install as app</h4>
+  <p>Save to your home screen for offline revision</p>
+  <button id="install-btn">Install</button>
+  <button onclick="document.getElementById('install-banner').style.display='none'">✕</button>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const TOPICS = [
+  { id:'q1', title:'Q1 — Products & materials (bicycle / roller coaster)', badge:'b-blue', qs:[
+    { q:'State the meaning of an "alloy".', m:1, src:'W24', a:'An alloy is a mixture of two or more metals (or a metal and another element). Example: steel is iron + carbon.' },
+    { q:'State two reasons for using a metal alloy to manufacture a bicycle frame.', m:2, src:'W24', a:'Any two: lightweight · more corrosion resistant · stronger/more durable · better strength-to-weight ratio than pure metals.' },
+    { q:'Name a suitable metal that can be used to fabricate roller coaster tracks.', m:1, src:'W25', a:'Mild Steel or Low carbon Steel[cite: 21].' },
+    { q:'Explain why a surface finish has been applied to roller coaster tracks.', m:2, src:'W25', a:'More aesthetically pleasing / to ensure aesthetics are representative of the ride. Corrosion Resistance / to protect it from corrosion with an undercoat and paint[cite: 21].' },
+    { q:'Name two suitable properties that would be needed in the material used to fabricate the track. Give reasons.', m:4, src:'W25', a:'Good tensile strength - needed to withstand the forces of the cars when running.\nDuctile / malleable - good when attempting to make difficult shapes of the tracks / good for welding and joining.\nToughness - can withstand the impacts of the cars when running[cite: 21].' },
+    { q:'Name a suitable material for (a) the roller coaster car body and (b) the car frame.', m:2, src:'W25', a:'Car Body: GRP (Glass Reinforced Plastic), Polyethylene, polypropylene, ABS, Fibre Glass, carbon fibre.\nCar Frame: Aluminium, Mild Steel, stainless steel, Aluminium Alloy[cite: 21].' },
+    { q:'State three advantages of using CAD software to design a roller coaster.', m:3, src:'W25', a:'Can produce accurate models · quicker to produce · easier to amend/modify · share models digitally · several people can work on it simultaneously · offers virtual tours · NDT can be simulated · takes up no physical space · quick to duplicate · 3D easily projected to 2D[cite: 24].' },
+    { q:'Explain why a non-destructive test (NDT) would be performed on a roller coaster.', m:2, src:'W25', a:'To test its operation and that it is safe for the operator and user. Non-Destructive Testing will assess the actual values of the working properties against design. NDT does not destroy the product/material therefore the roller coaster remains in service (destroying the product by testing it is either too costly or unrealistic)[cite: 24].' },
+    { q:'Name a suitable temporary joining method for roller coaster assembly and give two advantages.', m:3, src:'W25', a:'Nuts and Bolts, Machine Screw, or a threaded joining method such as stud bar or bolt.\nAdvantages: Lower skill level, easy to assemble/disassemble, easy to replace sections, will not destroy joint when replacing sections, lower cost than replacing whole track, could allow for extra movement[cite: 27].' },
+    { q:'Name a suitable permanent joining method for roller coaster track assembly and give two advantages.', m:3, src:'W25', a:'Rivets appropriate for construction (solid, hot-driven - NOT pop rivets) or Welding (MIG/Stick).\nAdvantages: May be a stronger joint, less maintenance needed, less components/parts to fail, leak resistance to minimise corrosion[cite: 27].' },
+    { q:'Describe two different tests that could be carried out on a bicycle before it is sold.', m:4, src:'W24', a:'Any two (2 marks each with description):\nBrake test — apply brakes at speed and check stopping distance and pad grip.\nElectrical motor test — check motor responds to pedal assist input.\nWheel quick-release test — check mechanism locks securely.\nGear test — check all gears shift smoothly without slipping.\nSuspension test — compress forks and check rebound.'},
+    { q:'Discuss the advantages and disadvantages of using carbon fibre rather than a metal alloy for a bicycle frame.', m:6, src:'W24', a:'Advantages (any 3): very high strength-to-weight ratio — extremely lightweight · high tensile strength · can be moulded into complex shapes · different thickness in high-stress areas · corrosion resistant · no painting required.\nDisadvantages (any 3): very expensive to purchase and manufacture · difficult/impossible to repair if cracked · cannot be recycled · brittle under impact — shatters rather than dents · specialist manufacturing required.' },
+    { q:'Identify two semi-permanent joining methods and describe where each would be used on a bicycle.', m:6, src:'S24', a:'Semi-permanent = can be disassembled. Any two with location (3 marks each):\n• Nut and bolt — brake mechanism, wheel attachment, handlebar stem, crank arm\n• Self-tapping screws — water bottle cage, brake levers\n• Quick-release mechanism — seat height adjustment, wheel removal\n• Hex bolts / Allen screws — various frame connection points' },
+  ]},
+  { id:'q2', title:'Q2 — Workshop tools, processes & drawing', badge:'b-amber', qs:[
+    { q:'Name two items of PPE that should be used when operating a pillar drill.', m:2, src:'W25', a:'Eye protection (such as Goggles / Safety glasses / face mask) AND Work wear (such as Apron / overalls / lab coat). Safety footwear (Safety boots/Steels) are also acceptable.\nNote: DO NOT accept gloves[cite: 30].' },
+    { q:'List three safety precautions that should be applied when using a screwdriver.', m:3, src:'W25', a:'Always select the correct screwdriver to match the screw · Do not put the workpiece against your body when applying force · Ensure your hands are dry and grease-free · Keep all body parts away from the tip · Check to make sure that the handle is not split or damaged · Check the shaft and tip for burrs or damage[cite: 30].' },
+    { q:'Name the two screwdriver drive types: Drive A (single straight slot) and Drive B (plus/cross shape).', m:2, src:'W25', a:'A: Flat head / Slotted\nB: Philips / Pozi drive (DO NOT ACCEPT CROSS HEAD)[cite: 30].' },
+    { q:'Name the two engineering callipers shown and state their uses: (1) check inside diameters, (2) one straight/one curved leg.', m:4, src:'W25', a:'Internal Callipers: Used to gauge/compare/check (not measure) internal dimensions and diameters of workpieces.\nOdd-leg/Jenny Callipers: Scribe/mark-out a parallel line from an edge at a specific or required distance[cite: 33].' },
+    { q:'Name four sequential processes that would be needed to produce a stepped bracket with four threaded holes. All named processes MUST be consecutive.', m:4, src:'W25', a:'Any four consecutive processes from this list:\nClamping/work holding · Measuring · Marking out/scribing · Cutting · Centre Punching (Can be milled first) · Drilling (Can be milled first) · Milling/Groove Milling (Can be drilled first) · Shaping (Can be drilled first) · Filing · De-burring[cite: 33].' },
+    { q:'When completing a side view in an orthographic drawing, what must you use and show?', m:5, src:'W25', a:'Award marks for: Use of projection/construction lines from both views · Correct view / correct position of side view · Hidden detail lines · Centre Lines · 45 degree line · Use of ruler/rule[cite: 46, 47, 48, 49, 50].' },
+    { q:'Name and state the use of these symbols: (1) Ø, (2) target symbol.', m:4, src:'W25', a:'Diameter (Ø): Used to show the dimension value is a diameter (width not length).\nDatum (target): Used for a point of origin or reference for measurements[cite: 55, 56, 57, 58].' },
+    { q:'Name three items of information an engineer may include in a Title Block.', m:3, src:'W25', a:'Projection angle symbol · Scale of drawing · Drawing Number · Drawing title / product or part name · Author of Drawing · Date created or checked or modified · Department drawing was created in · Material selection · Finishes that could be applied · What units the dimensions are in[cite: 64].' },
+    { q:'Describe a method to ensure that every pip is drilled to the same depth on a pillar drill.', m:2, src:'S24', a:'Use a depth stop on the pillar drill — set the stop to limit how far the drill bit travels down. OR use a jig/fixture. OR use a depth gauge to check after each hole.' },
+    { q:'Name the three tools shown in a typical Q2 tool identification table: a blue bench vice, a metal file, and a digital measuring instrument.', m:6, src:'S24', a:'Tool 1: Bench vice (NOT just "vice") — securely hold workpiece for filing, hacksawing, marking.\nTool 2: Hand file / flat file (NOT just "file") — remove small amounts of material by hand; shape and deburr.\nTool 3: Digital calliper (NOT "vernier calliper") — measure internal, external, and depth dimensions electronically.' },
+    { q:'Calculate how many 1.85m lengths of 12mm bar must be ordered for 36 pupils to each make a toolmakers\' clamp (each needs 200mm).', m:3, src:'W24', a:'1850 ÷ 200 = 9.25 → 9 clamps per length.\n36 ÷ 9 = 4 lengths.\nAnswer: 4 lengths.' },
+    { q:'Calculate how many 400mm bars are needed for 32 pupils to each make an 18mm dice.', m:3, src:'S24', a:'400 ÷ 18 = 22.2 → 22 dice per length.\n32 ÷ 22 = 1.45 → round UP to 2 lengths.\nAnswer: 2 lengths.' },
+  ]},
+  { id:'q3', title:'Q3 — Machines, calculations & design', badge:'b-coral', qs:[
+    { q:'A questionnaire on bicycles shows charts. What are the results for style and materials?', m:4, src:'W25', a:'Most popular style of bike = Mountain. Second most popular = Road. Most popular material for frame = Carbon Fibre. Most popular material for handlebars = Aluminium Alloy (DO NOT ACCEPT ALUMINIUM ON ITS OWN)[cite: 67].' },
+    { q:'Calculate the gear ratio for a 10-tooth driven gear and a 30-tooth drive gear.', m:2, src:'W25', a:'$10/30=1:3$ (1 mark for working, 1 mark for correct answer)[cite: 67].' },
+    { q:'Calculate the gear ratio for a 15-tooth driven gear and a 30-tooth drive gear.', m:2, src:'W25', a:'$15/30 = \frac{1}{2}$ (must be in simplest form)[cite: 67].' },
+    { q:'Calculate the gear ratio for a 6-tooth driven gear and a 30-tooth drive gear.', m:2, src:'W25', a:'$6/30=0.2$[cite: 67].' },
+    { q:'Name a suitable property and how it is used for a Rubber Tyre on a bicycle.', m:4, src:'W25', a:'Property: Elasticity, Durability, Temperature resistance, Chemical resistance, or Friction.\nUse (e.g. Elasticity): Allows tyre to be inflated/deflated, deform when turning corners/hitting bumps, creates extra suspension making ride smoother[cite: 74, 75, 76, 77].' },
+    { q:'Name a suitable property and how it is used for an Aluminium wheel rim.', m:4, src:'W25', a:'Property: Good Strength to Weight Ratio, Corrosion Resistance, Ductile, or Low Density (Not lightweight).\nUse (e.g. Low Density/Ratio): Lighter materials make cycling easier. Aluminium is rigid enough to deal with forces but light. Corrosion: Will not rust[cite: 80, 81, 82, 83, 84].' },
+    { q:'State the maximum and minimum sizes for 25.0mm ± 0.5mm.', m:2, src:'W25', a:'24.5mm - 25.5mm[cite: 88].' },
+    { q:'State the maximum and minimum sizes for 36.40mm ± 0.35mm.', m:2, src:'W25', a:'36.05mm - 36.75mm[cite: 88].' },
+    { q:'State the maximum and minimum sizes for 7.8mm +0.4mm / −0.0mm.', m:2, src:'W25', a:'7.8mm - 8.2mm[cite: 88].' },
+    { q:'Determine the correct measurements shown on the instruments: Steel Rule, Vernier Calliper, Micrometer.', m:3, src:'W25', a:'Steel Rule = 32mm\nVernier Calliper = 16mm\nMicrometer = 11mm\n(cm not accepted. Unit of mm is not required as stated in question)[cite: 89, 90].' },
+    { q:'Name the milling machine and state one engineering process that can be carried out on it.', m:2, src:'S24', a:'Machine: milling machine (vertical/universal milling machine).\nProcess: producing a flat surface · reducing the thickness of a component · cutting a slot or recess · producing a counterbore · face milling · shoulder milling.' },
+    { q:'List four sequential steps to cut 2mm off the surface of a square aluminium block on a milling machine.', m:4, src:'S24', a:'Steps in logical order:\n1. Secure workpiece to machine bed using clamps/machine vice.\n2. Fit correct milling cutter and set correct RPM for material.\n3. Level cutter with the workpiece surface (set datum/zero).\n4. Move cutter clear, raise bed by 2mm, then make the cut using the traverse handle.\n(Any 4 logical sequential steps, must be in order.)' },
+    { q:'Name the centre lathe and name one type of turning tool used on it.', m:2, src:'W24', a:'Machine: centre lathe.\nTurning tool: right-hand knife tool · facing tool · parting/part-off tool · knurling tool · chamfer tool · boring bar · roughing tool — any one.' },
+    { q:'The current in a candy floss machine circuit is 6.1A from a 230V supply. Calculate the resistance (Ohm\'s Law). Show working.', m:3, src:'W24', a:'Formula: R = V ÷ I\nR = 230 ÷ 6.1\nR = 37.70 Ω\n(1 mark: correct formula; 1 mark: substitution; 1 mark: correct answer with units)' },
+    { q:'State the name of the method used to reinforce a structure by using triangular shapes.', m:1, src:'S24', a:'Triangulation (also accept: trussing).' },
+    { q:'Discuss how roller coaster design and manufacturing has developed over the years. [8 marks]', m:8, src:'S24', a:'Band 3 (7-8): wide range, highly effective, well-applied.\nKey content: materials — timber to steel to composites, allowing tighter loops and inversions · lightweight alloys and composites reduce car mass, improving energy efficiency · CAD/FEA software to simulate forces before building · rides shorter but more intense — higher speeds, inversions, launch systems (LIM/LSM) · computer-controlled braking and safety systems · improved restraint systems and sensors · precision welding replacing bolted timber construction · regular NDT inspection schedules.' },
+  ]},
+  { id:'q4', title:'Q4 — Advantages & disadvantages [10 marks each]', badge:'b-purple', qs:[
+    { q:'Discuss the advantages and disadvantages of different forms of renewable energy that are currently used within engineering and manufacturing. [10 marks]', m:10, src:'W25', a:'Wind: Electricity is low cost, low operational costs, creates jobs. Disadv: Blades are non-recyclable, noisy, danger to wildlife.\nSolar: Electricity is low cost, clean energy minimal impact, good for economy. Disadv: Farms are expensive to set up, need large amounts of space, weather dependent (no night).\nGeothermal: Low cost, clean energy, no need to burn fuels. Disadv: Location specific, expensive to set-up, needs to connect via long distances.\nBiomass: Versatile source, cheaper/cleaner than fossil fuels, gets rid of waste. Disadv: Not totally clean (generates CO2), needs lots of space for crops, contributes to deforestation.\nHydro: Reliable/efficient, reservoirs build leisure industry. Disadv: Dams displace communities, uses huge amounts of concrete, expensive to build.\n(Award up to 3 marks for each suitable renewable energy. Add up to 1 mark for well-written response)[cite: 96, 97, 100, 102, 103, 104, 105, 106].' },
+    { q:'Discuss the advantages and disadvantages of using an electric car. [10 marks]', m:10, src:'W24', a:'Advantages: lower running cost per mile · zero tailpipe emissions (better local air quality) · can charge at home overnight · lower maintenance (no oil changes, fewer moving parts) · constant torque = instant smooth power · connects with smart home/phone technology · reduced engine noise.\nDisadvantages: high initial purchase cost · range anxiety — limited miles per charge · charging infrastructure still developing · long charge time vs quick refuel · battery degrades over time, expensive to replace · environmental cost of battery manufacturing (lithium mining) · specialist repairs · heavier than petrol equivalent.\nFor full marks: balanced, specific examples, written in paragraphs (not bullet points).' },
+    { q:'Discuss the advantages and disadvantages of using VR devices in the design and manufacturing industry. [10 marks]', m:10, src:'S24', a:'Advantages: visualise and test designs virtually before spending money on materials · identify faults before manufacture · simulate dangerous environments safely for training · share designs remotely across countries · quick modifications in VR are cheap · calculate project timelines and material quantities digitally.\nDisadvantages: expensive to purchase and implement · accuracy limitations for simulating real forces · design data at risk from hacking · health risks from prolonged use (eye strain, motion sickness) · steep learning curve · technical downtime disrupts workflow.\nFor full marks: balanced, specific engineering context, paragraphs not bullets.' },
+    { q:'Discuss the advantages and disadvantages of using smart speakers in the home. [10 marks]', m:10, src:'SAMs', a:'Developments enabling them: Wi-Fi/broadband improvements · microprocessor miniaturisation · voice recognition / natural language processing · Bluetooth/IFTTT connectivity · integration with heating, lighting, CCTV, TV systems.\nAdvantages: convenience — ordering, reminders, music without touching a device · accessible for elderly/disabled users · reduced need for separate devices · smart energy management.\nDisadvantages: data privacy — always-on microphone · reliance on internet · risk of hacking · job displacement · environmental cost of manufacturing/disposal.\nFor full marks: balanced, specific examples, paragraphs.' },
+  ]},
+];
+
+const QUIZ_DATA = [
+  { q:'What does PPE stand for?', opts:['Public Protection Equipment','Personal Protective Equipment','Personal Performance Evaluation','Protective Personal Engineering'], ans:1, ex:'PPE = Personal Protective Equipment. This came up in W24 as a 3-mark fill-in AND in W25 as a "name two items of PPE" question.' },
+  { q:'Which of the following is NOT an acceptable item of PPE for a pillar drill according to the mark scheme?', opts:['Safety goggles','Overalls','Gloves','Safety boots'], ans:2, ex:'The W25 mark scheme explicitly says: "do not accept gloves"[cite: 30]. Gloves can catch on the rotating drill bit and pull hands in.' },
+  { q:'A student needs 200mm of bar per clamp. Bar comes in 1.85m lengths. How many bars for 36 students?', opts:['3 lengths','4 lengths','5 lengths','6 lengths'], ans:1, ex:'1850 ÷ 200 = 9.25 → 9 per length. 36 ÷ 9 = 4. Answer: 4 lengths. (W24 mark scheme.) Key rule: round DOWN for pieces per length, round UP for number of lengths to order.' },
+  { q:'A 30-tooth drive gear drives a 10-tooth gear. What is the gear ratio?', opts:['3.0','0.5','1:3','1.5'], ans:2, ex:'The W25 mark scheme lists $10/30=1:3$[cite: 67].' },
+  { q:'25.0mm ± 0.5mm — what is the maximum acceptable size?', opts:['25.0mm','24.5mm','25.5mm','25.05mm'], ans:2, ex:'MAX = nominal + upper tolerance = 25.0 + 0.5 = 25.5mm. MIN = 25.0 − 0.5 = 24.5mm[cite: 88].' },
+  { q:'7.8mm +0.4mm / −0.0mm — what is the minimum acceptable size?', opts:['7.4mm','7.8mm','8.2mm','8.0mm'], ans:1, ex:'Unilateral tolerance — the dimension can only go UP. MIN = 7.8mm (the nominal). MAX = 7.8 + 0.4 = 8.2mm[cite: 88].' },
+  { q:'The S24 mark scheme says for the digital measuring tool: "Do NOT accept..."', opts:['Micrometer','Vernier calliper','Steel rule','Gauge'], ans:1, ex:'"Digital calliper" is the correct answer — NOT "vernier calliper". They are different tools. Similarly: "bench vice" not "vice", "hand file" not "file".' },
+  { q:'Which screw drive type has a single straight slot?', opts:['Phillips','Torx','Slotted (flat head)','Pozidrive'], ans:2, ex:'Slotted/flat head = single straight slot (Drive A in W25). Phillips/Pozi drive is accepted for the plus shape, but the MS strictly says DO NOT ACCEPT CROSS HEAD[cite: 30].' },
+  { q:'What is an internal calliper used for?', opts:['Measuring inside diameters exactly in mm','Scribing lines parallel to an edge','Gauging/comparing/checking internal dimensions','Setting drill depth'], ans:2, ex:'The W25 mark scheme specifically states it is used to gauge/compare/check (not measure) internal dimensions and diameters of workpieces[cite: 33].' },
+  { q:'What drawing symbol uses a circle with a cross inside it?', opts:['Diameter','Datum','Centre line','Hidden detail'], ans:1, ex:'Datum (target symbol). Used for a point of origin or reference for measurements[cite: 57, 58].' },
+  { q:'Carbon fibre is classified as which type of material?', opts:['Ferrous metal','Thermosetting plastic','Smart material','Composite material'], ans:3, ex:'Carbon fibre is a composite — carbon fibres in a resin matrix. Key W24 mark scheme notes: CANNOT be recycled, expensive, difficult to repair, brittle under impact.' },
+  { q:'In Q4, the mark scheme awards extra marks for:', opts:['Using diagrams','Writing in paragraphs / well written response','Giving more than 5 advantages','Mentioning brand names'], ans:1, ex:'The W25 mark scheme explicitly states: "Add up to 1 mark for a well written response"[cite: 97], and requires paragraphs for top band marks.' },
+  { q:'Name the method used to reinforce a structure using triangular shapes (1-mark answer, S24).', opts:['Lamination','Buttressing','Triangulation','Cantilevering'], ans:2, ex:'Triangulation (or trussing). This came up in S24 Q3b for 1 mark in the roller coaster context.' },
+  { q:'What material was the most popular for bicycle handlebars in the W25 survey?', opts:['Carbon Fibre','Aluminium','Aluminium Alloy','Steel'], ans:2, ex:'Aluminium Alloy. The W25 mark scheme strictly says "DO NOT ACCEPT ALUMINIUM ON ITS OWN"[cite: 67].' },
+  { q:'What process uses a tap to cut an internal thread in a pre-drilled hole?', opts:['Milling','Tapping','Turning','Broaching'], ans:1, ex:'Tapping uses a hardened threaded tap. Rotate clockwise to cut, anti-clockwise periodically to break swarf. This was the W24 Q2 sketch and notes question.' },
+  { q:'A gear ratio of 0.2 means:', opts:['The driven gear spins 5× slower than the drive gear','The driven gear spins 5× faster than the drive gear','The gears are the same size','The ratio is invalid'], ans:1, ex:'Ratio = driven/drive = $6/30 = 0.2$[cite: 67]. A lower number means fewer teeth on the driven gear, so it spins faster.' },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let score = 0, attempted = 0, qCur = 0, answered = false;
+let qOrder = [...QUIZ_DATA].sort(() => Math.random() - 0.5);
+let activeFilter = 'all';
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('show');
+  btn.classList.add('active');
+  if (id === 'questions' && !document.getElementById('qbank').innerHTML) buildQBank();
+  if (id === 'quiz' && !document.getElementById('quiz-area').innerHTML) loadQ();
+}
+
+// ============================================================
+// QUESTION BANK
+// ============================================================
+function buildQBank() {
+  const filterRow = document.getElementById('filter-row');
+  filterRow.innerHTML = '';
+  const allBtn = document.createElement('button');
+  allBtn.className = 'fbtn active';
+  allBtn.textContent = 'All questions';
+  allBtn.onclick = () => filterQ('all', allBtn);
+  filterRow.appendChild(allBtn);
+  TOPICS.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'fbtn';
+    b.textContent = t.title.split('—')[1].trim().slice(0,20);
+    b.onclick = () => filterQ(t.id, b);
+    filterRow.appendChild(b);
+  });
+
+  renderQBank('all');
+}
+
+function filterQ(filter, btn) {
+  activeFilter = filter;
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderQBank(filter);
+}
+
+function renderQBank(filter) {
+  const container = document.getElementById('qbank');
+  container.innerHTML = '';
+  TOPICS.forEach(topic => {
+    let questions = topic.qs;
+    if (filter !== 'all') questions = filter === topic.id ? topic.qs : [];
+    if (questions.length === 0) return;
+
+    const h = document.createElement('div');
+    h.className = 'q-topic-head';
+    h.innerHTML = `<span class="badge ${topic.badge}">${topic.badge.replace('b-','').toUpperCase()}</span>${topic.title}`;
+    container.appendChild(h);
+
+    questions.forEach((q, i) => {
+      const uid = `qa-${topic.id}-${i}`;
+      const d = document.createElement('div');
+      d.className = 'qrow';
+      d.innerHTML = `<div class="qtext">${q.q}</div>
+        <div class="qmeta">[${q.m} mark${q.m>1?'s':''}]<span class="src">${q.src}</span></div>
+        <button class="toggle-btn" onclick="togAns('${uid}',this)">Show answer</button>
+        <div class="qans" id="${uid}">${q.a.replace(/\n/g,'<br>')}</div>`;
+      container.appendChild(d);
+    });
+  });
+}
+
+function togAns(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.textContent = open ? 'Hide answer' : 'Show answer';
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+function loadQ() {
+  if (qCur >= qOrder.length) {
+    document.getElementById('quiz-area').innerHTML = `
+      <div class="card" style="text-align:center;padding:2rem">
+        <div style="font-size:24px;font-weight:600;margin-bottom:8px;color:var(--teal)">Quiz complete!</div>
+        <div style="color:var(--text2);margin-bottom:16px;font-size:15px">You scored <strong style="color:var(--text)">${score}/${qOrder.length}</strong></div>
+        <button class="restart-btn" onclick="restartQ()">Restart quiz</button>
+      </div>`;
+    document.getElementById('next-btn').classList.remove('show');
+    return;
+  }
+  answered = false;
+  const q = qOrder[qCur];
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-q">
+      <div class="qnum">Question ${qCur+1} of ${qOrder.length}</div>
+      <h3>${q.q}</h3>
+      <div class="opts">${q.opts.map((o,i)=>`<button class="opt" onclick="pickOpt(${i})" id="opt-${i}">${o}</button>`).join('')}</div>
+      <div class="explain" id="expl">${q.ex}</div>
+    </div>`;
+  document.getElementById('next-btn').classList.remove('show');
+  updateStats();
+}
+
+function pickOpt(i) {
+  if (answered) return;
+  answered = true; attempted++;
+  const q = qOrder[qCur];
+  if (i === q.ans) score++;
+  document.querySelectorAll('.opt').forEach((o, j) => {
+    o.classList.add('disabled');
+    if (j === q.ans) o.classList.add('correct');
+    else if (j === i && i !== q.ans) o.classList.add('wrong');
+  });
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('next-btn').classList.add('show');
+  updateStats();
+}
+
+function nextQ() { qCur++; loadQ(); }
+
+function restartQ() {
+  score = 0; attempted = 0; qCur = 0; answered = false;
+  qOrder = [...QUIZ_DATA].sort(() => Math.random() - 0.5);
+  updateStats(); loadQ();
+}
+
+function updateStats() {
+  document.getElementById('qs').textContent = score;
+  document.getElementById('qt').textContent = attempted;
+  document.getElementById('qp').textContent = attempted ? Math.round(score/attempted*100)+'%' : '—';
+  document.getElementById('qr-stat').textContent = qOrder.length - qCur;
+  document.getElementById('prog').style.width = (qCur/qOrder.length*100)+'%';
+}
+
+// ============================================================
+// PWA — MANIFEST + SERVICE WORKER
+// ============================================================
+const MANIFEST = {
+  name: 'Eduqas Engineering Unit 3',
+  short_name: 'Eng Revision',
+  description: 'Eduqas Level 1/2 Engineering Unit 3 revision hub',
+  start_url: '.',
+  display: 'standalone',
+  background_color: '#0f0f0f',
+  theme_color: '#0f0f0f',
+  icons: [
+    { src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%230f0f0f"/><text y="70" x="50" text-anchor="middle" font-size="60" fill="%23e8a020">⚙</text></svg>', sizes: '192x192', type: 'image/svg+xml' },
+  ]
+};
+
+const manifestBlob = new Blob([JSON.stringify(MANIFEST)], {type:'application/manifest+json'});
+const manifestURL = URL.createObjectURL(manifestBlob);
+document.getElementById('manifest-placeholder').href = manifestURL;
+
+const SW_CODE = `
+const CACHE = 'eng-revision-v1';
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/'])));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).then(res => {
+    if(res.ok) { const rc = res.clone(); caches.open(CACHE).then(c=>c.put(e.request,rc)); }
+    return res;
+  }).catch(() => caches.match(e.request))));
+});
+`;
+
+if ('serviceWorker' in navigator) {
+  const swBlob = new Blob([SW_CODE], {type:'application/javascript'});
+  const swURL = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swURL).catch(()=>{});
+}
+
+// Install prompt
+let installPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  installPrompt = e;
+  document.getElementById('install-banner').style.display = 'block';
+});
+document.getElementById('install-btn').addEventListener('click', () => {
+  if (installPrompt) {
+    installPrompt.prompt();
+    installPrompt.userChoice.then(() => {
+      installPrompt = null;
+      document.getElementById('install-banner').style.display = 'none';
+    });
+  }
+});
+window.addEventListener('appinstalled', () => {
+  document.getElementById('install-banner').style.display = 'none';
+});
+</script>
+</body>
+</html>
